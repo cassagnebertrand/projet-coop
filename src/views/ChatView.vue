@@ -74,7 +74,9 @@ function delMessage(message){
       })
 }
 function changeEditMessage(message){
-  editDataMessage.id = message.id
+  editDataMessage.id = message.id;
+  console.log(message.message)
+  editDataMessage.message = message.message;
 }
 function editMessage(){
 
@@ -95,24 +97,16 @@ function editChannel(){
 
 onMounted(() => {
   if (session.isValid()) {
-    console.log("C'est partie")
-
-
+    console.log("Lets go")
     api.get(`channels/${idChat}?token=${session.data.token}`)
         .then(response => {
           data.channel = response;
           //console.log(response)
-        })
+          editDataChannel.topic = data.channel.topic;
+          editDataChannel.label = data.channel.label;
 
+        })
     loadMessages()
-
-    /*
-    api.get(`members?token=${session.data.token}`)
-        .then(response => {
-          data.members = response;
-          console.log(response)
-        })
-    */
   }
 
 
@@ -235,8 +229,7 @@ function findMember(msg) {
                   </div>
 
                 </div>
-                <div class="card-body">
-                  {{ message.message }}
+                <div class="card-body" v-html="message.message">
                 </div>
               </div>
             </div>
