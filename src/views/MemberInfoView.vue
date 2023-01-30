@@ -23,7 +23,6 @@ const actualMember = membersStore.getMember(idMember);
 
 let actualMemberMessages = reactive([])
 
-import md5 from "md5";
 
 onMounted(() => {
   if (session.isValid()) {
@@ -55,7 +54,6 @@ function delMember(){
         router.push('/members-list')
       })
 }
-
 
 </script>
 
@@ -98,8 +96,7 @@ function delMember(){
                       <small class="text-muted">{{ message.message.modified_at }}</small>
                     </div>
                   </div>
-                  <div class="card-body">
-                    {{ message.message.message }}
+                  <div class="card-body" v-html="message.message.message">
                   </div>
                 </div>
               </router-link>
