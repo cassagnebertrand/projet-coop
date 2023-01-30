@@ -1,9 +1,10 @@
 <script setup>
 import {onMounted, reactive, ref} from 'vue'
 
-import {useRoute} from "vue-router";
+import {useRoute , useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 
 import {useUserStore} from "../stores/user";
 
@@ -23,9 +24,6 @@ const actualMember = membersStore.getMember(idMember);
 let actualMemberMessages = reactive([])
 
 import md5 from "md5";
-function avatarMember(member) {
-  return `https://www.gravatar.com/avatar/${md5(member.email)}d=404`
-}
 
 onMounted(() => {
   if (session.isValid()) {
@@ -51,6 +49,13 @@ onMounted(() => {
   }
 })
 
+function delMember(){
+  api.delete(`members/${idMember}?token=${session.data.token}`)
+      .then(response => {
+        router.push('/members-list')
+      })
+}
+
 
 </script>
 
@@ -58,18 +63,24 @@ onMounted(() => {
 <template>
   <main class="m-3">
     <div class="m-3 p-3">
-      <div class="d-flex align-items-center justify-content-start">
-        <figure class="my-1">
-          <img :src="`${avatarMember(actualMember)}`"
-               alt="..."
-               class="border border-4 rounded-circle"
-               width="96" height="96">
-        </figure>
-        <div>
-          <h2 class="m-2">Nom: {{ actualMember.fullname }}<span v-if="actualMember.id === session.data.member.id"> (Vous)</span></h2>
-          <p class="mx-2">@mail: {{ actualMember.email }}</p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center justify-content-start">
+          <figure class="my-1">
+            <img :src="`${membersStore.avatarMember(actualMember)}`"
+                 alt="..."
+                 class="border border-4 rounded-circle"
+                 width="96" height="96">
+          </figure>
+          <div>
+            <h2 class="m-2">Nom: {{ actualMember.fullname }}<span v-if="actualMember.id === session.data.member.id"> (Vous)</span></h2>
+            <p class="mx-2">@mail: {{ actualMember.email }}</p>
+          </div>
         </div>
+        <template v-if="actualMember.id !== session.data.member.id">
+          <button @click="delMember()" class="btn btn-danger">Supprimer le membre</button>
+        </template>
       </div>
+
       <hr class="m-3">
       <div class="m-2">
         <h3>Les 10 dernier messages:</h3>

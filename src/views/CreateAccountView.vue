@@ -40,7 +40,7 @@ function validateForm(){
             </div>
 
             <div class="mb-3">
-              <label class="form-label">E-mail</label>
+              <label class="form-label">Adresse email</label>
               <input type="email" class="form-control" v-model="member.email" required>
             </div>
 

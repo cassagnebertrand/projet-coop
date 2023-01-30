@@ -1,15 +1,18 @@
 import {onMounted, reactive, ref} from 'vue'
 import { defineStore } from 'pinia'
-import {useRouter} from 'vue-router'
-
+import {useRouter, useRoute} from 'vue-router'
 
 
 export const useSessionStore = defineStore('session', () => {
   const router = useRouter()
+  const route = useRoute()
   const data = reactive({
     member: {},
     token: false
   });
+
+
+  const openRoot = ['login', 'create-account'];
 
   function setSession(member,token) {
     data.member = member;
@@ -22,10 +25,18 @@ export const useSessionStore = defineStore('session', () => {
     data.token = false;
   }
 
+  function isOpenRoot (route) {
+    return openRoot.includes(route.name)
+  }
+
   async function isValid () {
 
+    if (isOpenRoot(route)){
+      return true
+    }
+
     if (!data.token) {
-      connect();
+      connect()
       return false
     } else {
       const mid = data.member.id;
@@ -38,7 +49,6 @@ export const useSessionStore = defineStore('session', () => {
         connect();
         return false
       }
-
       return true
     }
   }

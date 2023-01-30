@@ -1,6 +1,7 @@
 import { inject, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { useSessionStore } from '../stores/session'
+import md5 from "md5";
 
 export const useMembersStore = defineStore('members', () => {
     const session = useSessionStore();
@@ -36,7 +37,11 @@ export const useMembersStore = defineStore('members', () => {
         }
     }
 
-    return { state, loadMembers, getMember }
+    function avatarMember(member) {
+        return `https://www.gravatar.com/avatar/${md5(member.email)}?d=robohash`
+    }
+
+    return { state, avatarMember, loadMembers, getMember }
 }, {
     persist: false,
 })

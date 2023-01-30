@@ -5,7 +5,6 @@ const user = useUserStore();
 import {useSessionStore} from "../stores/session";
 import {onMounted} from "vue";
 const session = useSessionStore()
-
 onMounted(() => {
   api.get('ping').then(response => {
     console.log("L'api fonctionne !")

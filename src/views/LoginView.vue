@@ -39,12 +39,12 @@ function validateForm(){
           <form @submit.prevent="validateForm">
 
             <div class="mb-3">
-              <label class="form-label">Email address</label>
+              <label class="form-label">Adresse email</label>
               <input type="email" class="form-control" v-model="member.email" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Password</label>
+              <label class="form-label">Mot de passe</label>
               <input type="password" class="form-control" v-model="member.password" required>
             </div>
 

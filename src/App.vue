@@ -43,9 +43,6 @@ function start(){
   }
 }
 
-function avatarMember(member) {
-  return `https://www.gravatar.com/avatar/${md5(member.email)}d=404`
-}
 
 </script>
 
@@ -62,9 +59,6 @@ function avatarMember(member) {
           </li>
           <li class="ms-3">
             <RouterLink to="/members-list">Liste des membres</RouterLink>
-          </li>
-          <li class="ms-3">
-            <RouterLink to="/about">A propos</RouterLink>
           </li>
         </ul>
         <div>
@@ -87,7 +81,7 @@ function avatarMember(member) {
                 </ul>
               </div>
               <figure class="my-1">
-                <img :src="`${avatarMember(session.data.member)}`"
+                <img :src="`${members.avatarMember(session.data.member)}`"
                      alt="..."
                      class="border border-4 rounded-circle"
                      width="64" height="64">
