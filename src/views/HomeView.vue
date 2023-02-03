@@ -23,6 +23,8 @@ onMounted( () => {
 
 <template>
   <main>
-    <TheWelcome />
+    <div class="container">
+      <TheWelcome />
+    </div>
   </main>
 </template>
