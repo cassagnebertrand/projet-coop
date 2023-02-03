@@ -10,7 +10,6 @@ let member = reactive({
 })
 
 function validateForm(){
-  console.log(member);
   api.post('members',{
     body: member
   }).then(response => {

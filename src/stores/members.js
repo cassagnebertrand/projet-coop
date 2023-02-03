@@ -17,7 +17,7 @@ export const useMembersStore = defineStore('members', () => {
             const response = await api.get(`members?token=${session.data.token}`);
             const membersData = await response;
             state.members = membersData;
-            console.log(membersData)
+            //console.log(membersData)
             resolve(membersData);
         });
     }

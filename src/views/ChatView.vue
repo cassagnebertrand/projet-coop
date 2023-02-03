@@ -14,7 +14,6 @@ import {useSessionStore} from "../stores/session";
 
 const session = useSessionStore()
 
-console.log(session.data.member.id)
 
 import {useMembersStore} from '../stores/members'
 
@@ -73,7 +72,6 @@ function delMessage(message){
 }
 function changeEditMessage(message){
   editDataMessage.id = message.id;
-  console.log(message.message)
   editDataMessage.message = message.message;
 }
 function editMessage(){
@@ -105,7 +103,7 @@ function loadChannel(){
 
 onMounted(() => {
   if (session.isValid()) {
-    console.log("Lets go")
+    console.log("Hé zé bartie")
     loadChannel()
     loadMessages()
   }

@@ -13,7 +13,7 @@ const session = useSessionStore()
 
 onMounted( () => {
   if (session.isValid()){
-    console.log("C'est partie")
+    console.log("Hé zé bartie")
   }
 
 })

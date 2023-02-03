@@ -13,7 +13,6 @@ let member = reactive({
 })
 
 function validateForm(){
-  console.log(member);
   api.post('members/signin',{
     body: member
   }).then(response => {

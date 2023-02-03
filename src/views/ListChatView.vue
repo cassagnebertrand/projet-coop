@@ -11,7 +11,7 @@ let channels = ref([])
 
 onMounted( () => {
   if (session.isValid()){
-    console.log("C'est partie")
+    console.log("Hé zé bartie")
 
     api.get(`channels?token=${session.data.token}`)
         .then(response => {
