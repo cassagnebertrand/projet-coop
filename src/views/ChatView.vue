@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, reactive, ref} from 'vue'
+import {onMounted, reactive} from 'vue'
 
 import {useRoute , useRouter } from "vue-router";
 
@@ -20,7 +20,6 @@ import {useMembersStore} from '../stores/members'
 
 const membersStore = useMembersStore();
 
-import md5 from 'md5';
 
 const idChat = route.params.id
 
@@ -52,7 +51,6 @@ function loadMessages() {
   api.get(`channels/${idChat}/posts?token=${session.data.token}`)
       .then(response => {
         data.messages = response;
-        //console.log(response)
         // scroll au dernier message
         var elem = document.getElementById('message-container');
         if (elem !== null) {
@@ -91,21 +89,24 @@ function editChannel(){
   api.put(`channels/${idChat}?token=${session.data.token}`,{
     body: editDataChannel
   }).then(response => {
-    location.reload();
+    loadChannel()
   })
+}
+
+function loadChannel(){
+  api.get(`channels/${idChat}?token=${session.data.token}`)
+      .then(response => {
+        data.channel = response;
+        editDataChannel.topic = data.channel.topic;
+        editDataChannel.label = data.channel.label;
+
+      })
 }
 
 onMounted(() => {
   if (session.isValid()) {
     console.log("Lets go")
-    api.get(`channels/${idChat}?token=${session.data.token}`)
-        .then(response => {
-          data.channel = response;
-          //console.log(response)
-          editDataChannel.topic = data.channel.topic;
-          editDataChannel.label = data.channel.label;
-
-        })
+    loadChannel()
     loadMessages()
   }
 
@@ -124,10 +125,7 @@ function validateForm() {
 
 function findMember(msg) {
   const idMember = msg.member_id
-  const actualMember = membersStore.getMember(idMember)
-  //console.log(actualMember.fullname)
-
-  return actualMember
+  return membersStore.getMember(idMember)
 }
 
 </script>
